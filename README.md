@@ -32,16 +32,18 @@ Instruction on how to create a cell and pass parameter to it thought the symbol.
 ## Bussed Wire Name Examples 
 
 Expanded Names for Wire, Net, and Pin Names 
-|  Sample Name  | Expanded Form  |
-|  <\*2>term  |  term,term  |
-|  <\*2>(a,b),c  |  a,b,a,b,c   |
-|  <\*2>(a,<\*2>b)  |  a,b,b,a,b,b  |
-|  b<0:2>  |  b<0,1,2> or b<0>,b<1>,b<2> |
-|  b<0:2:1>   |  b<0,1,2>  |
-|  b<3:0:2>  |  b<3,1>  |
-|  b<0:2\*2>   |  b<0,0,1,1,2,2,>  |
-|  b<(0:2)\*2>  |  b<0,1,2,0,1,2>  |
-|  b<0,2\*2>  |  b<0,2,2>  |
-|  b<(0,2)\*2>  |  b<0,2,0,2>  |
-|  b<0,1:3:4\*1,2:2>  |  b<0,1,2>  |
-|  b<0:1,2:2>  |  b<0,1,2>  |
+
+ | Sample Name | Expanded Form |
+ | --- | --- |
+|  `<\*2>term`  |  `term,term`  |
+|  `<\*2>(a,b),c`  |  `a,b,a,b,c`   |
+|  `<\*2>(a,<\*2>b)`  |  `a,b,b,a,b,b`  |
+|  `b<0:2>`  |  `b<0,1,2>` or `b<0>,b<1>,b<2>` |
+|  `b<0:2:1>`   |  `b<0,1,2>`  |
+|  `b<3:0:2>`  |  `b<3,1>`  |
+|  `b<0:2\*2>`   |  `b<0,0,1,1,2,2,>`  |
+|  `b<(0:2)\*2>`  |  `b<0,1,2,0,1,2>`  |
+|  `b<0,2\*2>`  |  `b<0,2,2>`  |
+|  `b<(0,2)\*2>`  |  `b<0,2,0,2>`  |
+|  `b<0,1:3:4\*1,2:2>`  |  `b<0,1,2>`  |
+|  `b<0:1,2:2>`  |  `b<0,1,2>`  |
