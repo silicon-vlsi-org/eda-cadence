@@ -1,5 +1,9 @@
 # ABOUT
 Information related to Cadence EDA tools eg. Virtuoso, ADE, Spectre, etc. Please note, Cadence EDA tools are proprietary and the information contained in this repository is primarily for users and will not contain any confidential or propeitary informaton.
+# TOC
+- [VIRTUOSO SCHEMATIC](#virtuoso-schematic)
+  - [Parameterized Cells](#parameterized-cells)
+  - [Bussed Wire Name Examples](#bussed-wire-name-examples)
 
 # VIRTUOSO SCHEMATIC 
 
@@ -35,15 +39,15 @@ Expanded Names for Wire, Net, and Pin Names
 
  | Sample Name | Expanded Form |
  | --- | --- |
-|  `<\*2>term`  |  `term,term`  |
-|  `<\*2>(a,b),c`  |  `a,b,a,b,c`   |
-|  `<\*2>(a,<\*2>b)`  |  `a,b,b,a,b,b`  |
+|  `<*2>term`  |  `term,term`  |
+|  `<*2>(a,b),c`  |  `a,b,a,b,c`   |
+|  `<*2>(a,<*2>b)`  |  `a,b,b,a,b,b`  |
 |  `b<0:2>`  |  `b<0,1,2>` or `b<0>,b<1>,b<2>` |
 |  `b<0:2:1>`   |  `b<0,1,2>`  |
 |  `b<3:0:2>`  |  `b<3,1>`  |
-|  `b<0:2\*2>`   |  `b<0,0,1,1,2,2,>`  |
-|  `b<(0:2)\*2>`  |  `b<0,1,2,0,1,2>`  |
-|  `b<0,2\*2>`  |  `b<0,2,2>`  |
-|  `b<(0,2)\*2>`  |  `b<0,2,0,2>`  |
-|  `b<0,1:3:4\*1,2:2>`  |  `b<0,1,2>`  |
+|  `b<0:2*2>`   |  `b<0,0,1,1,2,2,>`  |
+|  `b<(0:2)*2>`  |  `b<0,1,2,0,1,2>`  |
+|  `b<0,2*2>`  |  `b<0,2,2>`  |
+|  `b<(0,2)*2>`  |  `b<0,2,0,2>`  |
+|  `b<0,1:3:4*1,2:2>`  |  `b<0,1,2>`  |
 |  `b<0:1,2:2>`  |  `b<0,1,2>`  |
