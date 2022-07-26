@@ -4,6 +4,8 @@ Information related to Cadence EDA tools eg. Virtuoso, ADE, Spectre, etc. Please
 - [VIRTUOSO SCHEMATIC](#virtuoso-schematic)
   - [Parameterized Cells](#parameterized-cells)
   - [Bussed Wire Name Examples](#bussed-wire-name-examples)
+- [VIRTUOSO ADE](#VIRTUOSO-ADE)
+  - [Include a netlist in a schematic and simulate in ADE](#Include-a-netlist-in-a-schematic-and-simulate-in-ADE)
 
 # VIRTUOSO SCHEMATIC 
 
@@ -51,3 +53,50 @@ Expanded Names for Wire, Net, and Pin Names
 |  `b<(0,2)*2>`  |  `b<0,2,0,2>`  |
 |  `b<0,1:3:4*1,2:2>`  |  `b<0,1,2>`  |
 |  `b<0:1,2:2>`  |  `b<0,1,2>`  |
+
+
+# VIRTUOSO ADE
+
+## Include a netlist in a schematic and simulate in ADE
+
+- Following instructions from [support.cadence.com](https://support.cadence.com/apex/ArticleAttachmentPortal?id=a1Od0000000nXEGEA2&pageName=ArticleContent)
+- Open a new schematic window and place the pins (say, `vip`, `vin`) from your circuit in the schematic
+- Create a symbol view for the text subcircuit. You do this from the schematic window by selecting `Create -> Cellview -> From Cellview`
+- The Symbol Generation Options form will appear. Edit the fields in the Pin Specifications section, if desired (the default is all pins on the Top).
+  - If creating this for an existing schematic/symbol (For eg. simulating a extracted netlist), copy the symbol pins, etc for the existing symbol.
+- Under **Load/Save** Symbol Template Configuration, load the `artist` template.
+- Edit the symbol as desired and save the symbol view.
+- Make a copy of this symbol view and call the new view `spectre` or `eldoD`.
+- Edit the CDF:
+  - Set the CDF type to `Base` to open the base CDF for the cell. You will need "write" access to edit the CDF.
+  - Under the Component Parameter section in the Edit CDF form, add a component parameter called `model`.
+  - In the Add CDF Parameter form, specify only these values in order:
+    - Name: model
+    - Prompt: model
+    - Type: string
+    - Default: <You can enter the subcircuit name>
+    - Parse as CEL: ye
+    - Parse as number: no
+    - Store Default: no
+  - The "model" parameter holds the name of the subcircuit file to use during simulation for this cell. If you are finished adding parameters, click Apply.
+  - If you are passing other parameters into the model file, add those as well. For example, in the image below, entries are added for gain and length as well. Click Apply
+  - Edit the `Simulation Information` section of CDF for the `Spectre` or `eldoD` simulator (assuming you will simulate in `Spectre` or `eldoD`).
+  - You must modify the simulation information to recognize the model property and support the parameters passed into the subcircuit file.
+  - For example, choose spectre as the simulator and add the three instParameters: "model", "gain", and "length".
+  - Note that spectre is chosen as the simulator. You can select another simulator, if desired, by clicking on the red arrow next to spectre.
+  - The terminal names are already filled in for you in the termOrder field. If the terminal names are numerics like 1 2 3, you need to enclose them in double quotes like "1"  "2"  "3".
+  - If you have instance parameters, add them in the instParameters field; for example, "gain" "length".
+  - In the otherParameters field, type "model".
+  - Click `OK` in the form.
+- Instantiate the created symbol in a schematic and enter the name of the subcircuit as the model name.
+  - (For example, the model name that you enter in the field might be `GPIO_TOP` if that's the subcircuit name in the netlist.
+  - If you have added other parameters, such as gain and length, add them as well.
+- Invoke the `Analog Design Environment (ADE)`.
+- In the `Model Library Setup` form, provide the path to the file containing the text description of the subcircuit (that is, the netlist) through `Setup -> Model Libraries`.
+  - Note: If the netlist is in Spice syntax and you are simulating using Spectre, at the top of the file, you should add the following statement:
+```
+simulator lang=spice
+**
+spice macro subckt netlist
+```
+
