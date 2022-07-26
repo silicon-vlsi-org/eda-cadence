@@ -74,8 +74,8 @@ Expanded Names for Wire, Net, and Pin Names
     - Name: model
     - Prompt: model
     - Type: string
-    - Default: <You can enter the subcircuit name>
-    - Parse as CEL: ye
+    - Default: You can enter the subcircuit name
+    - Parse as CEL: yes
     - Parse as number: no
     - Store Default: no
   - The "model" parameter holds the name of the subcircuit file to use during simulation for this cell. If you are finished adding parameters, click Apply.
