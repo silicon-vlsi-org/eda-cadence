@@ -4,8 +4,10 @@ Information related to Cadence EDA tools eg. Virtuoso, ADE, Spectre, etc. Please
 - [VIRTUOSO SCHEMATIC](#virtuoso-schematic)
   - [Parameterized Cells](#parameterized-cells)
   - [Bussed Wire Name Examples](#bussed-wire-name-examples)
-- [VIRTUOSO ADE](#VIRTUOSO-ADE)
-  - [Include a netlist in a schematic and simulate in ADE](#Include-a-netlist-in-a-schematic-and-simulate-in-ADE)
+  - [Adding a Net Expression for Inherited Nets](#adding-a-net-expression-for-inherited-nets)
+  - [Passing Inherited Connection](#passing-inherited-connection)
+- [VIRTUOSO ADE](#virtuoso-ade)
+  - [Include a netlist in a schematic and simulate in ADE](#include-a-netlist-in-a-schematic-and-simulate-in-ade)
 
 # VIRTUOSO SCHEMATIC 
 
@@ -53,6 +55,37 @@ Expanded Names for Wire, Net, and Pin Names
 |  `b<(0,2)*2>`  |  `b<0,2,0,2>`  |
 |  `b<0,1:3:4*1,2:2>`  |  `b<0,1,2>`  |
 |  `b<0:1,2:2>`  |  `b<0,1,2>`  |
+
+
+## Adding a Net Expression for Inherited Nets
+
+- From the schematic menu select `Add`
+- `Property Name`: eg. `power`. A given name which is used by netSet property to pass a net name.
+- `Default Name`: eg. `vdd!` . The default name is usually a global name so it can used when no net names are passed to it.
+
+## Passing Inherited Connection
+
+- Instantiate the symbol of the top level schematic containing all the cells with inherited connections.
+- If the net expressions in the schematics were not created by you (eg. standard cells), you need to find the name of the `netSet` property of the global instance (eg. `vdd`). You can select the pin of the vdd symbol (red square) and check the property and it should show up something as `[@ground_gnd:%:gnd!]` where the name of the inherited terminal is `ground_gnd` and the default netSet expression is `gnd!`.
+- Now to set that global net to a physical pin/net, select the symbol, select `Edit -> Properties` and click `Add`
+  - Name: ground_gnd
+  - Type: netSet
+  - Value: dgnd
+  
+  
+  ### Alternate Method: Using Skill
+  
+  - `load("CreateNetExprLibrary.il")`  **FIXME**: Add CreateNetExprLibrary.il to this repo
+
+```
+    cv=dbOpenCellViewByType("myLib" "async_dig" "schematic" "" "a")
+         CreateNetExpr("VDD" "[@VDD:%:VDD!]" cv)
+         CreateNetExpr("VSS" "[@VSS:%:VSS!]" cv)
+         schCheck(cv)
+         dbSave(cv)
+         dbClose(cv)
+```
+
 
 
 # VIRTUOSO ADE
